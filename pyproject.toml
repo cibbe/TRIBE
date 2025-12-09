@@ -69,3 +69,8 @@ addopts = "-v --cov=src --cov-report=html --cov-report=term-missing"
 [tool.coverage.run]
 source = ["src"]
 omit = ["*/tests/*", "*/test_*.py"]
+
+[tool.uv.workspace]
+members = [
+    "analytical/plotting",
+]
