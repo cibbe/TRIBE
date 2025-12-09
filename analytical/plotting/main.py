@@ -5,7 +5,8 @@ def dAvg(delta, phi, k1t, k2t):
     terms=giveErrors(delta, phi, k1t, k2t)
     return np.sum(np.abs(terms), axis=(0,1))
 
-def giveErrors(delta, phi, k1t, k2t):
+
+def giveErrors4(delta, phi, k1t, k2t):
     errors = np.zeros((7,7), dtype=object)
     errors[1,1]= 8*(k1t**2-k2t**2)*np.cos(2*delta)
     errors[2,2]= -16*k1t**2*np.cos(2*delta)
@@ -16,15 +17,23 @@ def giveErrors(delta, phi, k1t, k2t):
     errors[5,5]= 8*np.cos(2*delta)*k1t**2
     errors[6,6]= -8*np.cos(2*delta)*k2t**2
 
-
-    # terms = [
-    #     dE1E1, dE2E2, dE2E3, dE3E3,
-    #     dE4E5, dE4E6,
-    #     dE5E5, dE6E6
-    # ]
-    # terms = [abs(x) for x in terms]
     return errors
 
+def giveErrors2(delta, phi, k1t, k2t):
+    errors = np.zeros((7,7), dtype=object)
+    errors[1,1]= 2 * np.cos(2*delta) * (k1t**2 - k2t**2)
+    errors[2,2] = 4 * k1t**2 * np.cos(2*delta)
+    errors[2,3] = -2 * (k1t + k2t) * np.exp(1j*phi) * np.sin(delta*2) * np.sqrt(k1t) * np.sqrt(k2t)
+    errors[3,3] = -4 * k2t**2 * np.cos(2*delta)
+    errors[4,5] = np.sqrt(2) * np.exp(-1j * phi) * np.sin(2*delta) * k1t**(3/2) * np.sqrt(k2t)
+    errors[4,6] = np.sqrt(2) * np.exp(1j * phi) * np.sin(2*delta) * k2t**(3/2) * np.sqrt(k1t)
+    errors[5,5] = -2 * k1t**2 * np.cos(2 * delta)
+    errors[6,6] = 2 * k2t**2 * np.cos(2*delta)
+    
+    return errors
+
+def giveErrors(delta, phi, k1t, k2t): # Choose giverrors4 or giveerrors2 here
+    return giveErrors4(delta,phi, k1t, k2t)
 
 def main():
     delta=np.pi/2
@@ -79,6 +88,8 @@ def main():
         cols[1].plot(delta, np.abs(errvals[coord[0], coord[1]]), label=errorList[i])
 
     cols[1].set_ylim(bottom=0)
+    cols[1].set_xticks(ticks)
+    cols[1].set_xticklabels(labels)
 
     cols[1].set_title("Separate errors")
     cols[1].legend(bbox_to_anchor=(1.04,0.5), loc="center left")
@@ -126,6 +137,8 @@ def main():
     for i, coord in enumerate(errorIndexes):
         cols[1].plot(delta, np.abs(errvals[coord[0], coord[1]]), label=errorList[i])
     cols[1].set_ylim(bottom=0)
+    cols[1].set_xticks(ticks)
+    cols[1].set_xticklabels(labels)
     # for i, y in enumerate(giveErrors(delta, 0, k1t, k2t)):
     #     axes[1,1].plot(delta, y, label=errorList[i])
 
