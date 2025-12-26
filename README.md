@@ -4,8 +4,10 @@ Two-Mode Rotationally Symmetric Bosonic Code Error Bias
 ## Installation
 
 ### Prerequisites
-- Python 3.8 or higher
+- Python 3.10 or higher
 - uv package manager (install from https://github.com/astral-sh/uv)
+- Wolfram Mathematica (Version 13.0 or newer)
+- NCAlgebra (Version 6.0 or newer)
 
 #### Installing uv
 ```bash
