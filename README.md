@@ -43,10 +43,13 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 If you use this code in your research, please cite:
 
 ```
-@software{tribe2025,
+@software{TRIBE_2025,
   title = {{TRIBE}: Two-Mode Rotation-Symmetric Bosonic Code Error Bias},
   author = {Andersson, Julius and Hiscoke, Griffin and Svensson, Carl and Zou, Hang},
+  month = dec,
   year = {2025},
+  license = {MIT},
+  version = {1.0},
   url = {https://github.com/cibbe/TRIBE}
 }
 ```
