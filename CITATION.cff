@@ -1,0 +1,26 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: "TRIBE: Two-Mode Rotation-Symmetric Bosonic Code Error Bias"
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Julius
+    family-names: Andersson
+    email: juliusan@chalmers.se
+  - given-names: Griffin
+    family-names: Hiscoke
+    email: hiscoke@chalmers.se
+  - given-names: Carl
+    family-names: Svensson
+    email: carlsven@chalmers.se
+  - given-names: Hang
+    family-names: Zou
+    email: hangzo@chalmers.se
+repository-code: 'https://github.com/cibbe/TRIBE'
+license: MIT
+version: '1.0'
+date-released: '2025-12-31'
