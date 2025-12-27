@@ -56,7 +56,8 @@ def giveErrorsOffDiag_N2(phi, delta, k1t, k2t):
     return giveErrors01_N2(phi, delta, k1t, k2t) + giveErrors10_N2(phi, delta, k1t, k2t).T
 
 def errsum_N2(delta,phi,k1t, k2t):
-    return np.abs(giveErrorsDiag_N2(delta, phi, k1t, k2t))**2 + np.abs(giveErrorsOffDiag_N2(delta, phi, k1t, k2t))**2 * 2
+    offDiag = np.abs(giveErrorsOffDiag_N2(delta, phi, k1t, k2t))**2
+    return np.abs(giveErrorsDiag_N2(delta, phi, k1t, k2t))**2 + offDiag# + offDiag.T
 
 
 def main():
@@ -83,10 +84,10 @@ def main():
         aspect="auto",
         extent=[0, np.pi, 0, np.pi]
     )
-    fig.suptitle("$N=2, k_1=k_2=0.01$")
+    fig.suptitle(f"$N=2$, $k_1t={k1t}$, $k_2t={k2t}$")
 
     fig.colorbar(im, label="Cost sum")
-    ax1.set_title("Cost depent on beam splitter parameters")
+    ax1.set_title("Cost dependence on beam splitter parameters")
     ax1.set_xticks(ticks, labels)
     ax1.set_yticks(ticks, labels)
     ax1.set_xlabel("$\\delta$ [rad]")
@@ -99,10 +100,41 @@ def main():
     ax2.set_xlabel("$\\delta$ [rad]")
     ax2.set_ylabel("Cost sum")
     ax2.set_box_aspect(1)
-
-
-
+    ax2.set_ylim(bottom=0)
     plt.show()
+
+
+    fig, (ax1, ax2) = plt.subplots(ncols=2)
+
+    delta_optimal = np.pi/4
+    theta_optimal = np.pi/4
+    xlabels = []
+    ylabels = []
+    for i in range(7):
+        xlabels.append(f"$E_{i+1}$")
+        ylabels.append(f"$E_{i+1}^\\dagger$")
+
+    fig.suptitle(f"Error contributions for $N=2$, $\\delta=\\phi=\\pi/4$, $k_1t={k1t}$, $k_2t={k2t}$")
+    data_diag = np.array(np.abs(giveErrorsDiag_N2(delta_optimal, theta_optimal, k1t, k2t))**2, dtype = float)
+    data_offdiag = np.array(np.abs(giveErrorsOffDiag_N2(delta_optimal, theta_optimal, k1t, k2t))**2, dtype = float)
+
+    ax1.set_title("Diagonals")
+    cax1 = ax1.matshow(data_diag)
+    ax1.set_xticks(range(7),xlabels)
+    ax1.set_yticks(range(7),ylabels)
+
+    cax2 = ax2.matshow(data_offdiag)
+    ax2.set_title("Off-diagonals")
+    ax1.set_xticks(range(7),xlabels)
+    ax1.set_yticks(range(7),ylabels)
+    ax1.set_title("Error contributions for $N=2")
+
+    fig.colorbar(cax1)
+    fig.colorbar(cax2)
+    plt.show()
+
+
+
 
 
 if __name__ == "__main__":
